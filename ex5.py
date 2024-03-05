@@ -36,10 +36,11 @@ class ArrQueue:
         else:
             first_element = self.queue[self.head]
         print('peek', first_element)
+        return
 
         
 #2. 
-class CircularListNode:
+class ListNode:
     def __init__(self, value):
         self._value = value
         self._next = None
@@ -54,5 +55,44 @@ class CircularListNode:
     def toString(self):
         return str(self._value)
 
-#class ListQueue:
-    #def __init__(self):
+class ListQueue:
+    def __init__(self):
+        self._head = None
+        self._tail = None
+    def enqueue(self, value):
+        new_node = ListNode(value)
+        if self._head is None:
+            self._head = new_node
+            print('enqueue', value)
+        else:
+            self._tail._next = new_node
+            print('enqueue', value)
+        self._tail = new_node
+        self._tail._next = self._head
+    def dequeue(self):
+        if self._head is None:
+            print('dequeue None')
+            return
+        temp = self._head._value
+        if self._head == self._tail:
+            self._head = None
+            self._tail = None
+            print('dequeue', temp)
+        else:
+            self._head = self._head._next
+            self._tail._next = self._head
+            print('dequeue', temp)
+        return temp
+    def peek(self):
+        if self._head is None:
+            print('peek None')
+            return
+        else:
+            first_node = self._head._value
+        print('peek', first_node)
+        return
+                    
+      
+
+
+
