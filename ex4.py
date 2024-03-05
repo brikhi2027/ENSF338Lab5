@@ -206,18 +206,15 @@ print('Average time for linked list queue implementation:', list_avgtime, 'secon
 # 5. Plot the distribution of times (distributions for each implementation
 # should be overlayed in the same plot; make sure to use consistent
 # ranges) and discuss the results [0.3 pts]
+import matplotlib.pyplot as plt
 
-#array_times = []
-#linkedlist_times = []
+plt.hist(array_time, bins = 10, alpha = 0.8, edgecolor = 'black', label = 'array implementation')
+plt.hist(linkedlist_time, bins = 10, alpha = 0.8, edgecolor = 'black', label = 'linked list implementation')
+plt.legend()
+plt.title("Queques")
+plt.xlabel('Execution Times')
+plt.ylabel('Number of Executions')
+plt.xlim()
+plt.show()
 
-#for i in range(100):
-    #tasks = generate_list()
-    #array_queue = QueueArrays(10000)
-    #list_queue = QueueLinkedLists
-    #array_times.append(arraysPerformance(array_queue, tasks))
-    #linkedlist_times.append(linkedListsPerformance(list_queue, tasks))
-#array_avgtime = sum(array_times) / 100
-#list_avgtime = sum(linkedlist_times) / 100
-
-#print('Average time for array stack implementation:', array_avgtime, 'seconds.')
-#print('Average time for linked list stack implementation:', list_avgtime, 'seconds.')
+# 
