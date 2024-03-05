@@ -100,20 +100,7 @@ class QueueLinkedLists:
 # task is either an enqueue w/ probability 0.7, or a dequeue w/
 # probability 0.3 [0.3 pts]
 
-#import numpy as np
 import random
-
-#def generate_list():
-    #operations = ['enqueue', 'dequeue']
-    #weights = [0.7, 0.3]
-
-    #list = np.random.choice(operations, 10000, p=weights)
-    #full_list = []
-    #for i in range(0, len(list)):
-        #operation_type = list[i]
-        #full_operation = list[i] + '(' + str(random.randint(0, 10)) + ')'
-        #full_list.append(full_operation)
-    #return full_list
 
 def generate_list():
     num_enqueue = 0
@@ -139,38 +126,6 @@ def generate_list():
 # lists of tasks using timeit and print the results [0.3 pts]
 
 import timeit
-
-#def arraysPerformance(arr, task_list):
-    #time = 0
-    
-    #for operation in task_list:
-        #num = ''
-        #for x in operation:
-                #if x.isdigit():
-                    #num += x
-        #num = int(num)
-
-        #if 'enqueue' in operation:
-            #time += timeit.timeit(lambda: arr_enqueue(arr,x), number = 1)
-        #else:
-            #time += timeit.timeit(lambda: arr_dequeue(arr), number = 1)
-
-    #return time
-
-#def arr_enqueue(arr,x):
-    #arr.enqueue(x)
-
-#def arr_dequeue(arr):
-    #arr.dequeue()
-
-
-
-#def linkedListsPerformance(list, task_list):
-    #time = 0
-    #for operation in task_list:
-            #op = 'list.' + operation
-            #time += timeit.timeit(stmt=op,number=1)
-    #return time
 
 def arraysPerformance(task_list, arr):
     for operation in task_list:
@@ -209,7 +164,7 @@ print('Average time for linked list queue implementation:', list_avgtime, 'secon
 import matplotlib.pyplot as plt
 
 plt.hist(array_time, bins = 10, alpha = 0.8, edgecolor = 'black', label = 'array implementation')
-plt.hist(linkedlist_time, bins = 10, alpha = 0.8, edgecolor = 'black', label = 'linked list implementation')
+plt.hist(linkedlist_time, bins = 5, color= 'r', alpha = 0.8, label = 'linked list implementation')
 plt.legend()
 plt.title("Queques")
 plt.xlabel('Execution Times')
@@ -217,4 +172,16 @@ plt.ylabel('Number of Executions')
 plt.xlim()
 plt.show()
 
-# 
+# The linked list implementation is much faster than the array implementation. This is most likely due
+# to the fact that when dequeuing from an array, all elements from index 1 to (n-1) must be shifted over 
+# left by one unit, incurring a cost of O(n) every time an element is dequeued. This is because array
+# elements can be indexed and so are stored in memory contiguously. Enqueuing is O(1) because a tail
+# pointer is implemented and so the index to insert to is known.
+
+# A list's elements are not stored contiguously in memory, which means a list can't be indexed, however,
+# a regular queue doesn't require indexing to enqueue or dequeue. This is why in a linked list, 
+# even though dequeuing also happens at the head, the rest of the elements do not have to be shifted over,
+# so the head pointer is simply updated to point to head.next, which is a complexity of O(1). Enqueuing 
+# is also O(1) because a tail pointer was implemented.
+
+# This is why the linked list distribution is around 0s and the array is further right around 0.4s.
