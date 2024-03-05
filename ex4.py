@@ -15,7 +15,7 @@ class QueueArrays:
             self._tail += 1
             self._array[self._tail] = value
         elif self._tail == (self.capacity - 1): # checks if full
-            print("Queue is full")
+            #print("Queue is full")
             return
         else:
             self._tail += 1
@@ -23,7 +23,7 @@ class QueueArrays:
 
     def dequeue(self):
         if self._head == -1: # checks if empty
-            print("Can't delete from an empty queue")
+            #print("Can't delete from an empty queue")
             return
         elif self._tail == 0: # checks if dequeuing last element
             self._head = -1
@@ -79,7 +79,7 @@ class QueueLinkedLists:
 
     def dequeue(self):
         if self._head == None:
-            print("Can't dequeue from an empty list")
+            #print("Can't dequeue from an empty list")
             return
         elif self._head == self._tail:
             self._head = None
@@ -100,74 +100,124 @@ class QueueLinkedLists:
 # task is either an enqueue w/ probability 0.7, or a dequeue w/
 # probability 0.3 [0.3 pts]
 
-import numpy as np
+#import numpy as np
 import random
 
-def generate_list():
-    operations = ['enqueue', 'dequeue']
-    weights = [0.7, 0.3]
+#def generate_list():
+    #operations = ['enqueue', 'dequeue']
+    #weights = [0.7, 0.3]
 
-    list = np.random.choice(operations, 10, p=weights)
-    full_list = []
-    for i in range(0, len(list)):
-        operation_type = list[i]
-        full_operation = list[i] + '(' + str(random.randint(0, 10)) + ')'
-        full_list.append(full_operation)
-    return full_list
+    #list = np.random.choice(operations, 10000, p=weights)
+    #full_list = []
+    #for i in range(0, len(list)):
+        #operation_type = list[i]
+        #full_operation = list[i] + '(' + str(random.randint(0, 10)) + ')'
+        #full_list.append(full_operation)
+    #return full_list
+
+def generate_list():
+    num_enqueue = 0
+    num_dequeue = 0
+    operations_list = []
+
+    while num_enqueue != 7000:
+        op = []
+        op.append('enqueue')
+        op.append(random.randint(0, 100))
+        operations_list.append(op)
+        num_enqueue += 1
+    while num_dequeue != 3000:
+        op = []
+        op.append('dequeue')
+        operations_list.append(op)
+        num_dequeue += 1
+    random.shuffle(operations_list)
+    return operations_list
+
 
 # 4. Measure the performance of both implementations on 100 such
 # lists of tasks using timeit and print the results [0.3 pts]
 
 import timeit
 
-def arraysPerformance(arr, task_list):
-    time = 0
+#def arraysPerformance(arr, task_list):
+    #time = 0
     
-    for operation in task_list:
-        num = ''
-        for x in operation:
-                if x.isdigit():
-                    num += x
-        num = int(num)
+    #for operation in task_list:
+        #num = ''
+        #for x in operation:
+                #if x.isdigit():
+                    #num += x
+        #num = int(num)
 
-        if 'enqueue' in operation:
-            time += timeit.timeit(lambda: arr_enqueue(arr,x), number = 1)
+        #if 'enqueue' in operation:
+            #time += timeit.timeit(lambda: arr_enqueue(arr,x), number = 1)
+        #else:
+            #time += timeit.timeit(lambda: arr_dequeue(arr), number = 1)
+
+    #return time
+
+#def arr_enqueue(arr,x):
+    #arr.enqueue(x)
+
+#def arr_dequeue(arr):
+    #arr.dequeue()
+
+
+
+#def linkedListsPerformance(list, task_list):
+    #time = 0
+    #for operation in task_list:
+            #op = 'list.' + operation
+            #time += timeit.timeit(stmt=op,number=1)
+    #return time
+
+def arraysPerformance(task_list, arr):
+    for operation in task_list:
+        if operation[0] == 'enqueue':
+            arr.enqueue(operation[1])
         else:
-            time += timeit.timeit(lambda: arr_dequeue(arr), number = 1)
+            arr.dequeue()
 
-    return time
-
-def arr_enqueue(arr,x):
-    arr.enqueue(x)
-
-def arr_dequeue(arr):
-    arr.dequeue()
-
-
-
-def linkedListsPerformance(list, task_list):
-    time = 0
+def linkedListsPerformance(task_list, list):
     for operation in task_list:
-            op = 'list.' + operation
-            time += timeit.timeit(stmt=op,number=1)
-    return time
+        if operation[0] == 'enqueue':
+            list.enqueue(operation[1])
+        else:
+            list.dequeue()
+
+array_time = []
+linkedlist_time = []
+arrQueueCapacity = random.randint(10000, 15000) #setting a random capacity for the array implementation of queue
+for i in range(100):
+    tasks = generate_list()
+    array_queue = QueueArrays(arrQueueCapacity)
+    list_queue = QueueLinkedLists()
+    array_time.append(timeit.timeit(lambda: arraysPerformance(tasks, array_queue), number = 1))
+    linkedlist_time.append(timeit.timeit(lambda: linkedListsPerformance(tasks, list_queue), number = 1))
+
+array_avgtime = sum(array_time)/100
+list_avgtime = sum(linkedlist_time)/100
+
+print('Average time for array queue implementation:', array_avgtime, 'seconds.')
+print('Average time for linked list queue implementation:', list_avgtime, 'seconds.')
 
 
 # 5. Plot the distribution of times (distributions for each implementation
 # should be overlayed in the same plot; make sure to use consistent
 # ranges) and discuss the results [0.3 pts]
 
-array_times = []
-linkedlist_times = []
+#array_times = []
+#linkedlist_times = []
 
-for i in range(100):
-    tasks = generate_list()
-    array_queue = QueueArrays(10000)
-    list_queue = QueueLinkedLists
-    array_times.append(arraysPerformance(array_queue, tasks))
-    linkedlist_times.append(linkedListsPerformance(list_queue, tasks))
-array_avgtime = sum(array_times) / 100
-list_avgtime = sum(linkedlist_times) / 100
+#for i in range(100):
+    #tasks = generate_list()
+    #array_queue = QueueArrays(10000)
+    #list_queue = QueueLinkedLists
+    #array_times.append(arraysPerformance(array_queue, tasks))
+    #linkedlist_times.append(linkedListsPerformance(list_queue, tasks))
+#array_avgtime = sum(array_times) / 100
+#list_avgtime = sum(linkedlist_times) / 100
 
-print('Average time for array stack implementation:', array_avgtime, 'seconds.')
-print('Average time for linked list stack implementation:', list_avgtime, 'seconds.')
+#print('Average time for array stack implementation:', array_avgtime, 'seconds.')
+#print('Average time for linked list stack implementation:', list_avgtime, 'seconds.')
