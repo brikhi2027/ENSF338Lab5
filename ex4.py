@@ -169,7 +169,6 @@ plt.legend()
 plt.title("Queques")
 plt.xlabel('Execution Times')
 plt.ylabel('Number of Executions')
-plt.xlim()
 plt.show()
 
 # The linked list implementation is much faster than the array implementation. This is most likely due
