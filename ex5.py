@@ -63,6 +63,8 @@ class ListQueue:
         new_node = ListNode(value)
         if self._head is None:
             self._head = new_node
+            self._tail = self._head
+            self._head._next = self._head # set the next pointer of the only node to point to itself
             print('enqueue', value)
         else:
             self._tail._next = new_node
