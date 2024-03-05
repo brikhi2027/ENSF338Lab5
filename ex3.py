@@ -85,7 +85,7 @@ def list_performance(task_list, stack):
 array_times = []
 linkedlist_times = []
 
-for i in range(101):
+for i in range(100):
     tasks = random_tasks()
     array_stack = ArrStack()
     list_stack = ListStack()
